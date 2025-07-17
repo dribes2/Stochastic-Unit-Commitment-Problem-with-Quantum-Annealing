@@ -229,7 +229,7 @@ for N in scenarios_array:
 
             cqm.set_objective(sum([C_shutdown[i]*z_off[i,t] + C_startup[i]*z_on[i,t] + b[i]*p[i,t] + c[i]*u[i,t] for i in range(G) for t in range(T)]))
             
-            save_model_in_json(cqm, f"CQM_{N}scenarios_{k}rho_{l}epsilon.json")
+            save_model_in_json(cqm, f"instances/CQM_{N}scenarios_{k}rho_{l}epsilon.json")
             
 
 
@@ -239,7 +239,7 @@ for N in scenarios_array:
 
             serialized_sampleset = save_data(sampler = sampler, runs = runs, max_time = max_time, m = cqm, label = f"{N}scenarios_{k}rho_{l}epsilon")
 
-            with open(f"results_{N}scenarios_{k}rho_{l}epsilon.json", "w") as f:
+            with open(f"results/results_{N}scenarios_{k}rho_{l}epsilon.json", "w") as f:
                 json.dump(serialized_sampleset, f, indent=4)
 
             

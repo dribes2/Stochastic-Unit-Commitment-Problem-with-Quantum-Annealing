@@ -18,7 +18,7 @@ def parse_feasible(sampleset):
 
 for e in range(E):
     for r in range(R):
-        with open(f"results_1000scenarios_{r}rho_{e}epsilon.json", "r") as f:
+        with open(f"results/results_1000scenarios_{r}rho_{e}epsilon.json", "r") as f:
             data[r,e] = dimod.SampleSet.from_serializable(json.load(f))
             feasible_data[r,e] = parse_feasible(data[r,e])
             energies[r,e] = np.sort(feasible_data[r,e].record.energy)

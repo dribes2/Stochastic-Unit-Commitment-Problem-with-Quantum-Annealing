@@ -15,7 +15,7 @@ The paper addresses two different problem formulations:
 
 This section deals with the **Stochastic Unit Commitment Problem**. The main output consists of two plots:
 
-- **`cost_vs_reliability`**: Shows the dependence of the cost function value on the reliability level \( p = 1 - \epsilon \). Results are generated for three types of covariance structures in the scenario sample set:
+- **`cost_vs_reliability`**: Shows the dependence of the cost function value on the reliability level \( p = 1 - ε \). Results are generated for three types of covariance structures in the scenario sample set:
   - Non-correlated
   - Moderately correlated
   - Highly correlated
@@ -24,7 +24,7 @@ This section deals with the **Stochastic Unit Commitment Problem**. The main out
 
 The problem is formulated as a **Mixed-Integer Linear Program (MILP)**. Both D-Wave and Gurobi solvers are used to generate results:
 
-### 🧠 D-Wave Runs
+### D-Wave Runs
 
 - **Sampler used**: `LeapHybridCQMSampler`
 
@@ -38,7 +38,7 @@ The problem is formulated as a **Mixed-Integer Linear Program (MILP)**. Both D-W
   - Add your D-Wave token at **line 245**
   - This script generates 25 samples corresponding to different scenario counts
 
-### ⚙️ Gurobi Runs
+### Gurobi Runs
 
 - **Solver used**: Gurobi via the Pyomo optimization framework
 

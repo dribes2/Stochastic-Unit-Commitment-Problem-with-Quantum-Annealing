@@ -1,5 +1,7 @@
 # Recreating Results from "XXXXXXX"
 
+The Unit Commitment Problem (UCP) is a very common problem in the field of energy systems and modeling. It consists on minimizing (maximizing) the cost (profit) of scheduling power generators meeting constraints such as demand, capacity, ramping limits, logic etc. This problem is NP-hard and thus, very demanding and time consuming to be tackled with classical methods. Here we share the code developed to tackle this problem with an alternative approache, Quantum Annealing.
+
 This repository contains the data and code used to reproduce the results presented in the paper **"XXXXXXX"** by *David Ribes* and *Tatiana Grandon*. For further inquiries, feel free to contact: [david.r.marza@ntnu.no](mailto:david.r.marza@ntnu.no).
 
 The paper addresses two different problem formulations:
@@ -13,7 +15,7 @@ The paper addresses two different problem formulations:
 
 ## 📁 Stoch_UCP
 
-This section deals with the **Stochastic Unit Commitment Problem**. The main output consists of two plots:
+The mathematical formulation of the Stochastic UCP can be found in the file `Stoch_UCP_formulation.pdf`. The main outputs obtained from this instance of the problems are:
 
 - **`cost_vs_reliability`**: Shows the dependence of the cost function value on the reliability level \( p = 1 - ε \). Results are generated for three types of covariance structures in the scenario sample set:
   - Non-correlated

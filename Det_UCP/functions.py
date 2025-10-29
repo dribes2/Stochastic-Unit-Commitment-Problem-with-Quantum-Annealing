@@ -6,14 +6,12 @@ from dwave.system import DWaveSampler, EmbeddingComposite, FixedEmbeddingComposi
 
 def build_BQM(parameters, constraints):
     #parameters: a dictionary containing all the parameters that define the model: costs, ramping limits, lagrange multipliers, ...
-    #constraints: dictionary containing 6 keys with the 6 names of the constraints, and each of them, a boolean defininf whether the constraint is implemented or not.
+    #constraints: dictionary containing 6 keys with the 6 names of the constraints, and each of them, a boolean defining whether the constraint is introduced or not.
     N = parameters["N"]
     T = parameters["T"]
     n = parameters["n"]
 
 
-    biases = []
-    variables = []
     bqm = dimod.BinaryQuadraticModel("BINARY")
 
     u = {(i, t): f"u{i}{t}" for i in range(N) for t in range(T)}
@@ -23,23 +21,7 @@ def build_BQM(parameters, constraints):
     
     for i in range(N):
         for t in range(1,T):
-            '''
-            # LOGIC FOR SWITCHING ON
-            bqm.add_linear(u[i,t], 1*parameters["logicON_penalty"])
-            bqm.add_interaction(u[i,t], u[i,t-1], -1*parameters["logicON_penalty"])
-            bqm.add_interaction(z_on[i,t], u[i,t-1], 2*parameters["logicON_penalty"])
-            bqm.add_linear(z_on[i,t], 2*parameters["logicON_penalty"])
-            bqm.add_interaction(z_on[i,t], u[i,t], -2*parameters["logicON_penalty"])
-            bqm.add_linear(z_on[i,t], -1*parameters["logicON_penalty"])
-            # LOGIC FOR SWITCHING OFF
-            bqm.add_linear(u[i,t-1], 1*parameters["logicOFF_penalty"])
-            bqm.add_interaction(u[i,t-1], u[i,t], -1*parameters["logicOFF_penalty"])
-            bqm.add_interaction(z_off[i,t], u[i,t], 2*parameters["logicOFF_penalty"])
-            bqm.add_linear(z_off[i,t], 2*parameters["logicOFF_penalty"])
-            bqm.add_interaction(z_off[i,t], u[i,t-1], -2*parameters["logicOFF_penalty"])
-            bqm.add_linear(z_off[i,t], -1*parameters["logicOFF_penalty"])
-            '''
-            if constraints["logic1"]:
+            if constraints["logic1"]: 
                 bqm.add_linear_equality_constraint([(z_on[i,t], 1), (z_off[i,t], -1), (u[i,t], -1), (u[i,t-1], 1)],
                                                 lagrange_multiplier = parameters["logic1_penalty"],
                                                 constant = 0)
@@ -104,14 +86,8 @@ def build_BQM(parameters, constraints):
                                                 ub = 10**4,
                                                 penalization_method = "slack",
                                                 cross_zero = False)
-            '''
-            bqm.add_linear_equality_constraint(vector_total_P,
-                                               lagrange_multiplier = parameters["demand_penalty"],
-                                               constant = -1*parameters["demand"][t])
-            
-            '''
         
-    
+    # Fixing all variables corresponding to time 0 (prior to time horizon)
     for i in range(N):
         if constraints["logic1"] or constraints["ramp"]:
             bqm.fix_variable(u[i,0], parameters["u_initial"][i])
@@ -121,19 +97,7 @@ def build_BQM(parameters, constraints):
             binary_p = list(reversed([int(j) for j in format(p, f"0{n}b")]))
             for k in range(n):
                 bqm.fix_variable(P[i,0,k], binary_p[k])
-    
-    #print("Before scaling")
-    #print("Max: ", max(np.abs(biases)), "Variable: ", variables[biases.index(max(biases))])
-    #print("Min: ", min((biases)), "Variable: ", variables[biases.index(min(biases))])
-    #for v, bias in bqm.linear.items():
-    #    biases.append(bias)
-    #    variables.append(v)
-    #for v, bias in bqm.quadratic.items():
-    #    biases.append(bias)
-    #    variables.append(v)
-
-    #bqm.scale(10)
-    
+    # Adding all cost terms to the cost function
     for i in range(N):
         for t in range(1, T):
             bqm.add_linear(u[i,t], parameters["c"][i]) # Fixed Cost
@@ -577,7 +541,7 @@ def run_quantum_algorithm(parameters, constraints, iterations, num_reads, token,
     return output_dict
 
 
-
+'''
 def average_last_half_terms(vector):
     n = len(vector)
     if n == 0:
@@ -593,6 +557,7 @@ def calculate_y(parameters,parameter_to_check, values_vector):
         joint_prob_vector = res_dict["ratios_total"]
         out.append(average_last_half_terms(joint_prob_vector))
     return out
+    '''
 
 def plot_after_algorithm(dict, y_axis, constraints, parameters):
     # dict: dictionary containing the results of the algorithm. It contains values of ratios of feasibility of each constraint, values of each multiplier, at each iteration
@@ -695,7 +660,7 @@ def plot_after_algorithm(dict, y_axis, constraints, parameters):
         #plt.title("Binary constraints")
         plt.tick_params(axis='both', labelsize=18)
 
-        plt.savefig("R_binaries.pdf", bbox_inches='tight')
+        #plt.savefig("R_binaries.pdf", bbox_inches='tight')
         plt.show()
     
     if constraints["demand"] and constraints["ramp"] and constraints["capacity"]:
@@ -711,7 +676,7 @@ def plot_after_algorithm(dict, y_axis, constraints, parameters):
         plt.ylim([-0.05,1.05])
         #plt.title("Continous constraints")
         plt.tick_params(axis='both', labelsize=18)
-        plt.savefig("R_continuous.pdf", bbox_inches='tight')
+        #plt.savefig("R_continuous.pdf", bbox_inches='tight')
         plt.show()
 
 def plot_feasibility_histogram(sampleset, is_feasible_fn, energy_fn, parameters, constraints, bin_width):
@@ -758,6 +723,6 @@ def plot_feasibility_histogram(sampleset, is_feasible_fn, energy_fn, parameters,
     
     plt.tick_params(labelsize=16)
     plt.tight_layout()
-    plt.savefig("Feasibility_histogram_deterministic_BQM.pdf")
+    #plt.savefig("Feasibility_histogram_deterministic_BQM.pdf")
     plt.show()
 

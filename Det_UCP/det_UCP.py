@@ -8,7 +8,6 @@ R_up = [200,100,100]
 C_startup = [20, 18, 5]
 C_shutdown = [0.5,0.3,1.0]
 b = [0.1, 0.125, 0.150]
-#b = [100, 125, 150]
 c = [5, 7, 6]
 
 demand = [0, 160, 500, 400]
@@ -33,7 +32,7 @@ alpha = 0.5
 N = 3
 T = 4
 n = 9
-#delta = [(P_max[i] - P_min[i])/(2**n - 1) for i in range(N)]
+
 delta = [1, 1, 1]
 
 parameters = {"N": N,
@@ -83,16 +82,16 @@ constraints["capacity"] = True
 constraints["coupling"] = True
 
 
-dictionary_out = run_classical_algorithm(parameters, constraints, iterations = 50, num_reads=100)
+dictionary_out = run_classical_algorithm(parameters, constraints, iterations = 50, num_reads=50)
 plot_after_algorithm(dictionary_out, "ratios", constraints, parameters)
 
 
 sa = neal.SimulatedAnnealingSampler()
 bqm = build_BQM(parameters, constraints)
-#bqm.normalize()
+
 
 sampleset = sa.sample(bqm,
-                      num_reads = 1000,
+                      num_reads = 100,
                       num_sweeps = 5000)
 
 min_energy = find_lowest_energy_solution(sampleset, parameters, constraints, True)

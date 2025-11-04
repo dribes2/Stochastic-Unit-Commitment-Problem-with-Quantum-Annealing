@@ -33,12 +33,12 @@ The problem is formulated as a **Mixed-Integer Linear Program (MILP)**. Both D-W
 - **To generate `cost_vs_reliability` data**:
   - Edit `Conejo_UCP_JCC_CQM_reliability.py`
   - Add your D-Wave token at **line 237**
-  - This script generates a sampleset for each point in the plot (3 covariance types × 7 reliability levels = 21 points)
+  - This script generates a json file containing the serialized sampleset for each point in the plot (3 covariance types × 7 reliability levels = 21 points). The json file is located in Stoch_UCP/cost_vs_reliability/results/
 
 - **To generate `cost_vs_scenarios` data**:
   - Edit `Conejo_UCP_JCC_scenarios.py`
   - Add your D-Wave token at **line 245**
-  - This script generates 25 samples corresponding to different scenario counts
+  - This script generates 25 json files containing the resulting sampleset solution corresponding to different scenario counts. The json file is located in Stoch_UCP/cost_vs_scenarios/results/
 
 ### Gurobi Runs
 

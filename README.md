@@ -15,7 +15,7 @@ The paper addresses two different problem formulations:
 
 ## 📁 Stoch_UCP
 
-The mathematical formulation of the Stochastic UCP can be found in the file `Stoch_UCP_formulation.pdf`. The main outputs obtained from this instance of the problems are:
+The mathematical formulation of the Stochastic UCP can be found in the file `Stoch_UCP_formulation.pdf`. This document outlines the objective function, decision variables, and all relevant operational and logical constraints used in the model. The main outputs obtained from this instance of the problems are:
 
 - **`cost_vs_reliability`**: Shows the dependence of the cost function value on the reliability level \( p = 1 - ε \). Results are generated for three types of covariance structures in the scenario sample set:
   - Non-correlated
@@ -60,4 +60,27 @@ The problem is formulated as a **Mixed-Integer Linear Program (MILP)**. Both D-W
 
 ## 📁 Det_UCP
 
-*Section under construction or to be filled in.*
+This folder contains the implementation and formulation of the **Deterministic Unit Commitment Problem (UCP)**. It mirrors the structure of the `Stoch_UCP` folder but focuses on the **deterministic** case, where uncertainties in demand or generation are not explicitly modeled.
+
+### 📄 Mathematical Formulation
+
+The mathematical formulation of the deterministic UCP is detailed in the file: `Det_UCP_formulation.pdf`. This document outlines the objective function, decision variables, and all relevant operational and logical constraints used in the model.
+
+### 🧩 Code Structure
+
+The folder includes two main Python scripts:
+
+- **`functions.py`** — Contains all auxiliary functions required to define, build, and solve the deterministic UCP model.  
+  These include functions for:
+  - Model construction (variables, constraints, objective)
+  - Data initialization and parameter handling
+  - Solution extraction and formatting
+  - Plotting utilities
+
+- **`det_UCP.py`** — Serves as the main execution script.  
+  It imports functions from `functions.py` to:
+  1. Build and solve the deterministic UCP instance  
+  2. Collect and process results  
+  3. Generate plots illustrating cost, commitment schedules, or other performance metrics  
+
+Running this script will automatically execute the deterministic UCP workflow and produce the relevant output figures.

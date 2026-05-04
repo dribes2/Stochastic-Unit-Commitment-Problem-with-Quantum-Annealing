@@ -2,7 +2,7 @@
 
 The Unit Commitment Problem (UCP) is a very common problem in the field of energy systems and modeling. It consists of minimizing (maximizing) the cost (profit) of scheduling power generators meeting constraints such as demand, capacity, ramping limits, logic etc. This problem is NP-hard and thus, very demanding and time consuming to be tackled with classical methods. Here we share the code developed to tackle this problem with an alternative approach, Quantum Annealing.
 
-This repository contains the data and code used to reproduce the results presented in the paper **"Towards Quantum Stochastic Optimization for Energy Systems under Uncertainty: Joint Chance Constraints with Quantum Annealing"** by *David Ribes* and *Tatiana Grandon*. For further inquiries, feel free to contact: [david.r.marza@ntnu.no](mailto:david.r.marza@ntnu.no).
+This repository contains the data and code used to reproduce the results presented in the paper **"Quantum Annealing for Joint Chance-Constrained Unit Commitment"** by *David Ribes* and *Tatiana Grandon*. For further inquiries, feel free to contact: [david.r.marza@ntnu.no](mailto:david.r.marza@ntnu.no).
 
 The paper addresses two different problem formulations:
 
